@@ -11,7 +11,46 @@
 		AF33609F2FC371A200D0C402 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF33609E2FC371A200D0C402 /* ContentView.swift */; };
 		AF3360A12FC371A300D0C402 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF3360A02FC371A300D0C402 /* Assets.xcassets */; };
 		AF3360A52FC371A300D0C402 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF3360A42FC371A300D0C402 /* Preview Assets.xcassets */; };
+		AF3360B22FC371D400D0C402 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF3360B12FC371D400D0C402 /* WidgetKit.framework */; };
+		AF3360B42FC371D400D0C402 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF3360B32FC371D400D0C402 /* SwiftUI.framework */; };
+		AF3360B72FC371D400D0C402 /* OutlookWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3360B62FC371D400D0C402 /* OutlookWidgetBundle.swift */; };
+		AF3360B92FC371D400D0C402 /* OutlookWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3360B82FC371D400D0C402 /* OutlookWidget.swift */; };
+		AF3360BD2FC371D600D0C402 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF3360BC2FC371D600D0C402 /* Assets.xcassets */; };
+		AF3360C22FC371D600D0C402 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AF3360AF2FC371D400D0C402 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AF3360C82FC37A4300D0C402 /* OutlookIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = AF3360C72FC37A4300D0C402 /* OutlookIntents.intentdefinition */; };
+		AF3360CB2FC3804400D0C402 /* GeographicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3360CA2FC3804400D0C402 /* GeographicView.swift */; };
+		AF3360CC2FC3804400D0C402 /* GeographicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3360CA2FC3804400D0C402 /* GeographicView.swift */; };
+		AF3360CF2FC3835200D0C402 /* MetaCodable in Frameworks */ = {isa = PBXBuildFile; productRef = AF3360CE2FC3835200D0C402 /* MetaCodable */; };
+		AF3360D12FC3838900D0C402 /* HelperCoders in Frameworks */ = {isa = PBXBuildFile; productRef = AF3360D02FC3838900D0C402 /* HelperCoders */; };
+		AF3360D62FC3902A00D0C402 /* us-states.geojson in Resources */ = {isa = PBXBuildFile; fileRef = AF3360D52FC3902A00D0C402 /* us-states.geojson */; };
+		AF3360D72FC3902A00D0C402 /* us-states.geojson in Resources */ = {isa = PBXBuildFile; fileRef = AF3360D52FC3902A00D0C402 /* us-states.geojson */; };
+		AF3360D92FC397EB00D0C402 /* outlook_test.geojson in Resources */ = {isa = PBXBuildFile; fileRef = AF3360D82FC397EB00D0C402 /* outlook_test.geojson */; };
+		AF3360DA2FC397EB00D0C402 /* outlook_test.geojson in Resources */ = {isa = PBXBuildFile; fileRef = AF3360D82FC397EB00D0C402 /* outlook_test.geojson */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AF3360C02FC371D600D0C402 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF3360912FC371A200D0C402 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AF3360AE2FC371D400D0C402;
+			remoteInfo = WidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AF3360C62FC371D600D0C402 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				AF3360C22FC371D600D0C402 /* WidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		AF3360992FC371A200D0C402 /* Convective Outlook Widget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Convective Outlook Widget.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -20,6 +59,18 @@
 		AF3360A02FC371A300D0C402 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AF3360A22FC371A300D0C402 /* Convective_Outlook_Widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Convective_Outlook_Widget.entitlements; sourceTree = "<group>"; };
 		AF3360A42FC371A300D0C402 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		AF3360AF2FC371D400D0C402 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF3360B12FC371D400D0C402 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = /System/Library/Frameworks/WidgetKit.framework; sourceTree = "<absolute>"; };
+		AF3360B32FC371D400D0C402 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = /System/Library/Frameworks/SwiftUI.framework; sourceTree = "<absolute>"; };
+		AF3360B62FC371D400D0C402 /* OutlookWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlookWidgetBundle.swift; sourceTree = "<group>"; };
+		AF3360B82FC371D400D0C402 /* OutlookWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlookWidget.swift; sourceTree = "<group>"; };
+		AF3360BC2FC371D600D0C402 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AF3360BE2FC371D600D0C402 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AF3360BF2FC371D600D0C402 /* OutlookWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OutlookWidget.entitlements; sourceTree = "<group>"; };
+		AF3360C72FC37A4300D0C402 /* OutlookIntents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = OutlookIntents.intentdefinition; sourceTree = "<group>"; };
+		AF3360CA2FC3804400D0C402 /* GeographicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeographicView.swift; sourceTree = "<group>"; };
+		AF3360D52FC3902A00D0C402 /* us-states.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "us-states.geojson"; sourceTree = "<group>"; };
+		AF3360D82FC397EB00D0C402 /* outlook_test.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = outlook_test.geojson; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,13 +81,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AF3360AC2FC371D400D0C402 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF3360D12FC3838900D0C402 /* HelperCoders in Frameworks */,
+				AF3360B42FC371D400D0C402 /* SwiftUI.framework in Frameworks */,
+				AF3360B22FC371D400D0C402 /* WidgetKit.framework in Frameworks */,
+				AF3360CF2FC3835200D0C402 /* MetaCodable in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		AF3360902FC371A200D0C402 = {
 			isa = PBXGroup;
 			children = (
+				AF3360C92FC3802200D0C402 /* Shared */,
 				AF33609B2FC371A200D0C402 /* Convective Outlook Widget */,
+				AF3360B52FC371D400D0C402 /* OutlookWidget */,
+				AF3360B02FC371D400D0C402 /* Frameworks */,
 				AF33609A2FC371A200D0C402 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -45,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				AF3360992FC371A200D0C402 /* Convective Outlook Widget.app */,
+				AF3360AF2FC371D400D0C402 /* WidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -69,6 +135,38 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		AF3360B02FC371D400D0C402 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AF3360B12FC371D400D0C402 /* WidgetKit.framework */,
+				AF3360B32FC371D400D0C402 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AF3360B52FC371D400D0C402 /* OutlookWidget */ = {
+			isa = PBXGroup;
+			children = (
+				AF3360B62FC371D400D0C402 /* OutlookWidgetBundle.swift */,
+				AF3360B82FC371D400D0C402 /* OutlookWidget.swift */,
+				AF3360BE2FC371D600D0C402 /* Info.plist */,
+				AF3360BC2FC371D600D0C402 /* Assets.xcassets */,
+				AF3360BF2FC371D600D0C402 /* OutlookWidget.entitlements */,
+				AF3360C72FC37A4300D0C402 /* OutlookIntents.intentdefinition */,
+			);
+			path = OutlookWidget;
+			sourceTree = "<group>";
+		};
+		AF3360C92FC3802200D0C402 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				AF3360D82FC397EB00D0C402 /* outlook_test.geojson */,
+				AF3360D52FC3902A00D0C402 /* us-states.geojson */,
+				AF3360CA2FC3804400D0C402 /* GeographicView.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -79,15 +177,38 @@
 				AF3360952FC371A200D0C402 /* Sources */,
 				AF3360962FC371A200D0C402 /* Frameworks */,
 				AF3360972FC371A200D0C402 /* Resources */,
+				AF3360C62FC371D600D0C402 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AF3360C12FC371D600D0C402 /* PBXTargetDependency */,
 			);
 			name = "Convective Outlook Widget";
 			productName = "Convective Outlook Widget";
 			productReference = AF3360992FC371A200D0C402 /* Convective Outlook Widget.app */;
 			productType = "com.apple.product-type.application";
+		};
+		AF3360AE2FC371D400D0C402 /* WidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF3360C32FC371D600D0C402 /* Build configuration list for PBXNativeTarget "WidgetExtension" */;
+			buildPhases = (
+				AF3360AB2FC371D400D0C402 /* Sources */,
+				AF3360AC2FC371D400D0C402 /* Frameworks */,
+				AF3360AD2FC371D400D0C402 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WidgetExtension;
+			packageProductDependencies = (
+				AF3360CE2FC3835200D0C402 /* MetaCodable */,
+				AF3360D02FC3838900D0C402 /* HelperCoders */,
+			);
+			productName = WidgetExtension;
+			productReference = AF3360AF2FC371D400D0C402 /* WidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -102,6 +223,9 @@
 					AF3360982FC371A200D0C402 = {
 						CreatedOnToolsVersion = 15.2;
 					};
+					AF3360AE2FC371D400D0C402 = {
+						CreatedOnToolsVersion = 15.2;
+					};
 				};
 			};
 			buildConfigurationList = AF3360942FC371A200D0C402 /* Build configuration list for PBXProject "Convective Outlook Widget" */;
@@ -113,11 +237,15 @@
 				Base,
 			);
 			mainGroup = AF3360902FC371A200D0C402;
+			packageReferences = (
+				AF3360CD2FC3833600D0C402 /* XCRemoteSwiftPackageReference "MetaCodable" */,
+			);
 			productRefGroup = AF33609A2FC371A200D0C402 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				AF3360982FC371A200D0C402 /* Convective Outlook Widget */,
+				AF3360AE2FC371D400D0C402 /* WidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -127,8 +255,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF3360D62FC3902A00D0C402 /* us-states.geojson in Resources */,
 				AF3360A52FC371A300D0C402 /* Preview Assets.xcassets in Resources */,
 				AF3360A12FC371A300D0C402 /* Assets.xcassets in Resources */,
+				AF3360D92FC397EB00D0C402 /* outlook_test.geojson in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF3360AD2FC371D400D0C402 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF3360BD2FC371D600D0C402 /* Assets.xcassets in Resources */,
+				AF3360DA2FC397EB00D0C402 /* outlook_test.geojson in Resources */,
+				AF3360D72FC3902A00D0C402 /* us-states.geojson in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,11 +280,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF33609F2FC371A200D0C402 /* ContentView.swift in Sources */,
+				AF3360CB2FC3804400D0C402 /* GeographicView.swift in Sources */,
 				AF33609D2FC371A200D0C402 /* Convective_Outlook_WidgetApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AF3360AB2FC371D400D0C402 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF3360C82FC37A4300D0C402 /* OutlookIntents.intentdefinition in Sources */,
+				AF3360B72FC371D400D0C402 /* OutlookWidgetBundle.swift in Sources */,
+				AF3360B92FC371D400D0C402 /* OutlookWidget.swift in Sources */,
+				AF3360CC2FC3804400D0C402 /* GeographicView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AF3360C12FC371D600D0C402 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AF3360AE2FC371D400D0C402 /* WidgetExtension */;
+			targetProxy = AF3360C02FC371D600D0C402 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		AF3360A62FC371A300D0C402 /* Debug */ = {
@@ -200,6 +360,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -255,6 +416,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -264,13 +426,14 @@
 		AF3360A92FC371A300D0C402 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Convective Outlook Widget/Convective_Outlook_Widget.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Convective Outlook Widget/Preview Content\"";
-				DEVELOPMENT_TEAM = 4L776RNKG8;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -302,13 +465,14 @@
 		AF3360AA2FC371A300D0C402 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Convective Outlook Widget/Convective_Outlook_Widget.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Convective Outlook Widget/Preview Content\"";
-				DEVELOPMENT_TEAM = 4L776RNKG8;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -337,6 +501,86 @@
 			};
 			name = Release;
 		};
+		AF3360C42FC371D600D0C402 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = OutlookWidget/OutlookWidget.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OutlookWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Widget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.camila314.Convective-Outlook-Widget.OutlookWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AF3360C52FC371D600D0C402 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = OutlookWidget/OutlookWidget.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OutlookWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Widget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.camila314.Convective-Outlook-Widget.OutlookWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -358,7 +602,40 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		AF3360C32FC371D600D0C402 /* Build configuration list for PBXNativeTarget "WidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF3360C42FC371D600D0C402 /* Debug */,
+				AF3360C52FC371D600D0C402 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AF3360CD2FC3833600D0C402 /* XCRemoteSwiftPackageReference "MetaCodable" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyLab/MetaCodable.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AF3360CE2FC3835200D0C402 /* MetaCodable */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF3360CD2FC3833600D0C402 /* XCRemoteSwiftPackageReference "MetaCodable" */;
+			productName = MetaCodable;
+		};
+		AF3360D02FC3838900D0C402 /* HelperCoders */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF3360CD2FC3833600D0C402 /* XCRemoteSwiftPackageReference "MetaCodable" */;
+			productName = HelperCoders;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AF3360912FC371A200D0C402 /* Project object */;
 }
