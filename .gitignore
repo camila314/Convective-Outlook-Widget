@@ -1,6 +1,6 @@
-# Xcode User Data
 *.xcuserdata
 *.xcscm
 *.xcworkspace
 xcuserdata/
 xcshareddata/
+.DS_Store/
