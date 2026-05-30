@@ -20,8 +20,6 @@
 		AF3360C82FC37A4300D0C402 /* OutlookIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = AF3360C72FC37A4300D0C402 /* OutlookIntents.intentdefinition */; };
 		AF3360CB2FC3804400D0C402 /* GeographicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3360CA2FC3804400D0C402 /* GeographicView.swift */; };
 		AF3360CC2FC3804400D0C402 /* GeographicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3360CA2FC3804400D0C402 /* GeographicView.swift */; };
-		AF3360CF2FC3835200D0C402 /* MetaCodable in Frameworks */ = {isa = PBXBuildFile; productRef = AF3360CE2FC3835200D0C402 /* MetaCodable */; };
-		AF3360D12FC3838900D0C402 /* HelperCoders in Frameworks */ = {isa = PBXBuildFile; productRef = AF3360D02FC3838900D0C402 /* HelperCoders */; };
 		AF3360D62FC3902A00D0C402 /* us-states.geojson in Resources */ = {isa = PBXBuildFile; fileRef = AF3360D52FC3902A00D0C402 /* us-states.geojson */; };
 		AF3360D72FC3902A00D0C402 /* us-states.geojson in Resources */ = {isa = PBXBuildFile; fileRef = AF3360D52FC3902A00D0C402 /* us-states.geojson */; };
 		AF3360D92FC397EB00D0C402 /* outlook_test.geojson in Resources */ = {isa = PBXBuildFile; fileRef = AF3360D82FC397EB00D0C402 /* outlook_test.geojson */; };
@@ -71,6 +69,7 @@
 		AF3360CA2FC3804400D0C402 /* GeographicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeographicView.swift; sourceTree = "<group>"; };
 		AF3360D52FC3902A00D0C402 /* us-states.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "us-states.geojson"; sourceTree = "<group>"; };
 		AF3360D82FC397EB00D0C402 /* outlook_test.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = outlook_test.geojson; sourceTree = "<group>"; };
+		AF7A0AE22FCB341500BEE8E8 /* MyIAP.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyIAP.storekit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,10 +84,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF3360D12FC3838900D0C402 /* HelperCoders in Frameworks */,
 				AF3360B42FC371D400D0C402 /* SwiftUI.framework in Frameworks */,
 				AF3360B22FC371D400D0C402 /* WidgetKit.framework in Frameworks */,
-				AF3360CF2FC3835200D0C402 /* MetaCodable in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,6 +120,7 @@
 				AF3360A02FC371A300D0C402 /* Assets.xcassets */,
 				AF3360A22FC371A300D0C402 /* Convective_Outlook_Widget.entitlements */,
 				AF3360A32FC371A300D0C402 /* Preview Content */,
+				AF7A0AE22FCB341500BEE8E8 /* MyIAP.storekit */,
 			);
 			path = "Convective Outlook Widget";
 			sourceTree = "<group>";
@@ -203,8 +201,6 @@
 			);
 			name = WidgetExtension;
 			packageProductDependencies = (
-				AF3360CE2FC3835200D0C402 /* MetaCodable */,
-				AF3360D02FC3838900D0C402 /* HelperCoders */,
 			);
 			productName = WidgetExtension;
 			productReference = AF3360AF2FC371D400D0C402 /* WidgetExtension.appex */;
@@ -238,7 +234,6 @@
 			);
 			mainGroup = AF3360902FC371A200D0C402;
 			packageReferences = (
-				AF3360CD2FC3833600D0C402 /* XCRemoteSwiftPackageReference "MetaCodable" */,
 			);
 			productRefGroup = AF33609A2FC371A200D0C402 /* Products */;
 			projectDirPath = "";
@@ -612,30 +607,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		AF3360CD2FC3833600D0C402 /* XCRemoteSwiftPackageReference "MetaCodable" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftyLab/MetaCodable.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		AF3360CE2FC3835200D0C402 /* MetaCodable */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AF3360CD2FC3833600D0C402 /* XCRemoteSwiftPackageReference "MetaCodable" */;
-			productName = MetaCodable;
-		};
-		AF3360D02FC3838900D0C402 /* HelperCoders */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AF3360CD2FC3833600D0C402 /* XCRemoteSwiftPackageReference "MetaCodable" */;
-			productName = HelperCoders;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AF3360912FC371A200D0C402 /* Project object */;
 }

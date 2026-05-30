@@ -1,23 +1,20 @@
 import SwiftUI
-import MetaCodable
 
-@Codable
-struct GeographicFeature {
-    @CodedAt("properties", "LABEL")
+struct GeographicFeature: Decodable {
     let label: String?
-    
+
     var stroke: Color {
         switch label {
         case "TSTM": return Color(red: 0.7, green: 1, blue: 0.7)
         case "MRGL": return Color(red: 0, green: 0.7, blue: 0)
         case "SLGT": return Color(red: 1, green: 1, blue: 0)
-        case "ENH": return Color(red: 0.75, green: 0.25, blue: 0)
+        case "ENH": return Color(red: 1, green: 0.5, blue: 0)
         case "MDT": return Color(red: 1, green: 0, blue: 0)
         case "HIGH": return Color(red: 1, green: 0, blue: 1)
         default: return Color(red: 0.8, green: 0.8, blue: 0.8)
         }
     }
-    
+
     var line: Double {
         if label != nil {
             1.5
@@ -28,17 +25,53 @@ struct GeographicFeature {
 
     let geometry: Geometry
 
-    @Codable
-    @CodedAt("type")
-    enum Geometry {
+    enum Geometry: Decodable {
         case point(coordinates: [Double])
         case multiPoint(coordinates: [[Double]])
         case lineString(coordinates: [[Double]])
         case multiLineString(coordinates: [[[Double]]])
-        @CodedAs("Polygon")
         case polygon(coordinates: [[[Double]]])
-        @CodedAs("MultiPolygon")
         case multiPolygon(coordinates: [[[[Double]]]])
+
+        private enum CodingKeys: String, CodingKey {
+            case type, coordinates
+        }
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            let type = try container.decode(String.self, forKey: .type)
+            switch type {
+            case "Point":
+                self = .point(coordinates: try container.decode([Double].self, forKey: .coordinates))
+            case "MultiPoint":
+                self = .multiPoint(coordinates: try container.decode([[Double]].self, forKey: .coordinates))
+            case "LineString":
+                self = .lineString(coordinates: try container.decode([[Double]].self, forKey: .coordinates))
+            case "MultiLineString":
+                self = .multiLineString(coordinates: try container.decode([[[Double]]].self, forKey: .coordinates))
+            case "Polygon":
+                self = .polygon(coordinates: try container.decode([[[Double]]].self, forKey: .coordinates))
+            case "MultiPolygon":
+                self = .multiPolygon(coordinates: try container.decode([[[[Double]]]].self, forKey: .coordinates))
+            default:
+                throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "Unknown geometry type: \(type)")
+            }
+        }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case geometry, properties
+    }
+
+    private enum PropertiesKeys: String, CodingKey {
+        case label = "LABEL"
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let propertiesContainer = try container.nestedContainer(keyedBy: PropertiesKeys.self, forKey: .properties)
+        label = try propertiesContainer.decodeIfPresent(String.self, forKey: .label)
+        geometry = try container.decode(Geometry.self, forKey: .geometry)
     }
 }
 
@@ -83,24 +116,25 @@ func project(_ lon: Double, _ lat: Double, _ size: CGSize) -> CGPoint {
 
 struct GeographicView: View {
     let features: [GeographicFeature]
-    let size: CGSize
     
     var body: some View {
-        Canvas { context, size in
-            // Draw the view
-            for feature in features {
-                switch feature.geometry {
-                case let .polygon(coordinates):
-                    drawPoly(coordinates, stroke: feature.stroke, line: feature.line, ctx: context, size: size)
-                case let .multiPolygon(coordinates):
-                    for poly in coordinates {
-                        drawPoly(poly, stroke: feature.stroke, line: feature.line, ctx: context, size: size)
+        GeometryReader { geometry in
+            Canvas { context, size in
+                // Draw the view
+                for feature in features {
+                    switch feature.geometry {
+                    case let .polygon(coordinates):
+                        drawPoly(coordinates, stroke: feature.stroke, line: feature.line, ctx: context, size: size)
+                    case let .multiPolygon(coordinates):
+                        for poly in coordinates {
+                            drawPoly(poly, stroke: feature.stroke, line: feature.line, ctx: context, size: size)
+                        }
+                    default:
+                        break
                     }
-                default:
-                    break
                 }
-            }
-        }.frame(width: size.width, height: size.height)
+            }.frame(width: geometry.size.width, height: geometry.size.height)
+        }.aspectRatio(3/2, contentMode: .fit)
     }
     
     func drawPoly(_ poly: [[[Double]]], stroke: Color, line: Double, ctx: GraphicsContext, size: CGSize) {
@@ -127,5 +161,5 @@ struct GeographicView: View {
     let parsed2 = try! Data(contentsOf: url2!)
     let decoded2 = try! JSONDecoder().decode(GeoJSON.self, from: parsed2)
     
-    return GeographicView(features: decoded.features + decoded2.features, size: CGSize(width: 300, height: 200))
+    return GeographicView(features: decoded.features + decoded2.features).background(Color.black)
 }

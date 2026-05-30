@@ -14,8 +14,13 @@ struct OutlookView : View {
         let url = Bundle.main.url(forResource:"us-states", withExtension:"geojson");
         let parsed = try! Data(contentsOf: url!)
         let decoded = try! JSONDecoder().decode(GeoJSON.self, from: parsed)
-
-        GeographicView(features: decoded.features + entry.convectiveData, size: CGSize(width: 300, height: 140)).containerBackground(.black, for: .widget)
+        
+        let view = GeographicView(features: decoded.features + entry.convectiveData)
+        if #available(macOSApplicationExtension 14.0, iOS 17.0, *) {
+            view.containerBackground(.black, for: .widget)
+        } else {
+            view.background(Color.black)
+        }
     }
 }
 
