@@ -10,16 +10,28 @@ struct OutlookEntry : TimelineEntry {
 struct OutlookView : View {
     let entry: OutlookEntry
     
-    var body: some View {
+    var geoView: some View {
         let url = Bundle.main.url(forResource:"us-states", withExtension:"geojson");
         let parsed = try! Data(contentsOf: url!)
         let decoded = try! JSONDecoder().decode(GeoJSON.self, from: parsed)
-        
-        let view = GeographicView(features: decoded.features + entry.convectiveData)
+
+        let view = GeographicView(features: decoded.features + entry.convectiveData).frame(height: 170)
         if #available(macOSApplicationExtension 14.0, iOS 17.0, *) {
-            view.containerBackground(.black, for: .widget)
+            return view.containerBackground(.black, for: .widget)
         } else {
-            view.background(Color.black)
+            return view.background(Color.black)
+        }
+    }
+    
+    var body: some View {
+        ZStack {
+            geoView
+            Text("Day 1")
+                .foregroundColor(.white)
+                .font(.system(size: 20))
+                .padding(.leading, 0.0)
+                .padding(.bottom, 20.0)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
         }
     }
 }
@@ -56,7 +68,7 @@ struct OutlookProvider : IntentTimelineProvider {
     }
     
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<OutlookEntry>) -> Void) {
-        // refresh after 6 hours?
+        // refresh every interval of :30
         Task {
             let data = await getOutlookData(timeout: false)?.features ?? []
             let entry = OutlookEntry(date: Date(), convectiveData: data)
@@ -75,4 +87,18 @@ struct OutlookWidget : Widget {
             .description("Shows the daily Storm Prediction Center conective outlook")
             .supportedFamilies([.systemMedium])
     }
+}
+
+#Preview(as: .systemMedium) {
+    OutlookWidget()
+} timeline: {
+    let url = Bundle.main.url(forResource:"us-states", withExtension:"geojson");
+    let parsed = try! Data(contentsOf: url!)
+    let decoded = try! JSONDecoder().decode(GeoJSON.self, from: parsed)
+
+    let url2 = Bundle.main.url(forResource:"outlook_test", withExtension:"geojson");
+    let parsed2 = try! Data(contentsOf: url2!)
+    let decoded2 = try! JSONDecoder().decode(GeoJSON.self, from: parsed2)
+    
+    OutlookEntry(date: Date(), convectiveData: decoded.features + decoded2.features)
 }

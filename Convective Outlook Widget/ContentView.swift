@@ -54,13 +54,57 @@ struct BasicKey: PreferenceKey {
     }
 }
 
+// swiftui your synchronization systems confuse me a bit
+struct OutlookGeographicView: View {
+    @ObservedObject var outlook: OutlookData
+    
+    var body: some View {
+        if let features = outlook.geoData {
+            if features.isEmpty {
+                GeometryReader { geometry in
+                    Text("Failed to load!")
+                        .font(.system(size: 30))
+                        .padding()
+                        .frame(width: geometry.size.width, height: geometry.size.height)
+                }.aspectRatio(3/2, contentMode: .fit)
+            } else {
+                GeographicView(features: features)
+            }
+        } else {
+            GeometryReader { geometry in
+                Text("Loading...")
+                    .font(.system(size: 30))
+                    .padding()
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+            }.aspectRatio(3/2, contentMode: .fit)
+        }
+    }
+}
+struct OutlookForecastView: View {
+    @ObservedObject var outlook: OutlookData
+    
+    var body: some View {
+        Text(outlook.forecast)
+            .frame(minHeight: 500)
+            .padding(.top, 1.0)
+            .padding(.bottom, 30.0)
+            .monospaced()
+            .font(.system(size: 13))
+            .fontWeight(.bold)
+    }
+}
+
+// views are main actor by default but xcode wants to be silly
+@MainActor
 struct ContentView: View {
-    let colors: [Color] = [
+    static let colors: [Color] = [
         Color(red: 0.22, green: 0.24, blue: 0.3),
         .black
     ]
+    
+    @State private var spc = SPCData()
 
-    @State private var day: UInt8 = 1
+    @State private var day: Int = 1
     @State private var scrollToTop: Bool = true
 
     // cutesy
@@ -71,6 +115,9 @@ struct ContentView: View {
     @State private var tipPressed: Bool = false
     @State private var tipError: Bool = false
     @State private var tipSuccess: Bool = false
+    
+    // settings
+    @AppStorage("showLocation") var showLocation: Bool = false
     
     enum AlertState {
         case none
@@ -85,7 +132,7 @@ struct ContentView: View {
     @AppStorage("timesOpened") var timesOpened: Int = 0
     
     var body: some View {
-        return NavigationView {
+        return NavigationStack {
             VStack(spacing: 0) {
                 HStack {
                     Button(action: {
@@ -121,18 +168,19 @@ struct ContentView: View {
                     
                     Spacer()
 
-                    Button(action: {}, label: {
+                    NavigationLink(destination: SettingsView()) {
                         Image(systemName: "gear")
                             .font(.title)
                             .foregroundColor(.white)
                             .padding()
-                    })
+                    }
                 }
-                .background(colors[0])
+                .background(ContentView.colors[0])
+                .frame(height: 65)
                 alerts
                 scrollBody
             }
-            .background(scrollToTop ? colors[0] : Color.black)
+            .background(scrollToTop ? ContentView.colors[0] : Color.black)
             .navigationTitle("")
             #if os(iOS)
             .navigationBarHidden(true)
@@ -142,6 +190,33 @@ struct ContentView: View {
         }
         .preferredColorScheme(.dark)
     }
+    
+    private func tipTask(product: String) {
+        Task {
+            guard
+                let product = try? await Product.products(for: [product]).first,
+                let result = try? await product.purchase()
+            else {
+                alertState = .tipError
+                return
+            }
+            switch result {
+             case .success(let result):
+                if case .verified(let transaction) = result {
+                    await transaction.finish()
+                }
+                // it's fine i guess
+                if case .unverified(let transaction, _) = result {
+                    await transaction.finish()
+                }
+                alertState = .tipSuccess
+                break
+             default:
+                alertState = .none
+                break
+             }
+        }
+    }
 
     private var alerts: some View {
         ZStack {
@@ -150,8 +225,8 @@ struct ContentView: View {
                 .alert("Do you like my app?", isPresented: .mapped($alertState, to: .heartPressed)) {
                     VStack {
                         Button("Tip me!") { alertState = .tipPressed }
-                        Button("Write a review") { alertState = .none }
-                        Button("Contact me") { alertState = .none }
+                        Button("Write a review") { Task { await UIApplication.shared.open(URL(string:"https://google.com/")!) } }
+                        Button("Contact me") { Task { await UIApplication.shared.open(URL(string:"mailto:ilaca314@gmail.com")!) } }
                         Button("Cancel", role: .cancel) { alertState = .none }
                     }
                 } message: {
@@ -165,32 +240,9 @@ struct ContentView: View {
             Color.clear
                 .frame(height: 0)
                 .alert("Tip Options", isPresented: .mapped($alertState, to: .tipPressed)) {
-                    Button("Small Tip: $1") { Task {
-                        guard
-                            let product = try? await Product.products(for: ["small_tip"]).first,
-                            let result = try? await product.purchase()
-                        else {
-                            alertState = .tipError
-                            return
-                        }
-                        switch result {
-                         case .success(let result):
-                            if case .verified(let transaction) = result {
-                                await transaction.finish()
-                            }
-                            // it's fine i guess
-                            if case .unverified(let transaction, _) = result {
-                                await transaction.finish()
-                            }
-                            alertState = .tipSuccess
-                            break
-                         default:
-                            alertState = .none
-                            break
-                         }
-                    }}
-                    Button("Medium Tip: $5") { alertState = .none }
-                    Button("Huge Tip: $20") { alertState = .none }
+                    Button("Small Tip: $1") { tipTask(product: "small_tip") }
+                    Button("Medium Tip: $5") { tipTask(product: "medium_tip") }
+                    Button("Huge Tip: $20") { tipTask(product: "huge_tip") }
                     Button("Cancel", role: .cancel) { alertState = .none }
                 }
             Color.clear
@@ -211,15 +263,7 @@ struct ContentView: View {
     }
 
     private var scrollBody: some View {
-        let url = Bundle.main.url(forResource:"us-states", withExtension:"geojson");
-        let parsed = try! Data(contentsOf: url!)
-        let decoded = try! JSONDecoder().decode(GeoJSON.self, from: parsed)
-        
-        let url2 = Bundle.main.url(forResource:"outlook_test", withExtension:"geojson");
-        let parsed2 = try! Data(contentsOf: url2!)
-        let decoded2 = try! JSONDecoder().decode(GeoJSON.self, from: parsed2)
-        
-        return ScrollView(showsIndicators: false) {
+        ScrollView(showsIndicators: false) {
             // all this to make colors not weird in the bg
             GeometryReader { proxy in
                 Color.clear
@@ -251,15 +295,14 @@ struct ContentView: View {
                 .frame(height: 40)
                 .padding(.horizontal, 15.0)
                 
-                Picker(selection: .constant(1), label: Text("Picker")) {
+                /*Picker(selection: .constant(1), label: Text("Picker")) {
                     Text("Cat.").tag(1)
                     Text("Tornado").tag(2)
                     Text("Wind").tag(3)
                     Text("Hail").tag(4)
                 }
-                .pickerStyle(.segmented)
-                
-                GeographicView(features: decoded.features + decoded2.features)
+                .pickerStyle(.segmented)*/
+                OutlookGeographicView(outlook: spc.getOutlook(day: day))
                 HStack {
                     ColorKey("Storms", Color(red: 0.7, green: 1, blue: 0.7))
                     Spacer(minLength: 0)
@@ -283,17 +326,12 @@ struct ContentView: View {
                     Spacer()
                 }.padding(.top)
                 
-                Text("Day 1 Convective Outlook   NWS Storm Prediction Center Norman OK 0745 AM CDT Wed May 27 2026  Valid 271300Z - 281200Z  ...THERE IS A SLIGHT RISK OF SEVERE THUNDERSTORMS ACROSS PARTS OF THE MID-ATLANTIC...  ...SUMMARY... Scattered severe thunderstorms are possible across parts of the Mid-Atlantic states this afternoon into the early evening.  Strong to severe gusts (50-65 mph) capable of wind damage will be the primary hazard with the stronger thunderstorms.  ...Mid-Atlantic/Ohio Valley... An upper-level trough over the Great Lakes will move southeast towards the upper OH Valley/Mid-Atlantic states during the period.  Water-vapor imagery this morning shows a lead disturbance over southern OH moving east across the central Appalachians.  In the low levels, an analyzed frontal zone has been modulated by ongoing showers/thunderstorms and it will move southeast today.  A moist airmass ahead of the front, featuring dewpoints in the upper 60s to lower 70s F, will gradually destabilize through early afternoon.  East-southeastward moving clusters are forecast to evolve by later this afternoon.  Scattered strong to severe gusts (50-65 mph) capable of wind damage will be the primary risk with the stronger thunderstorms, although marginally severe hail may accompany the stronger cores this afternoon.  ...Southern ID into eastern OR... A belt of strong easterly mid-level flow will remain over southwest ID into southeast OR to the north of a stationary, deep-layer cyclone over the Sierra Nevada.  Heating of an adequately moist boundary layer will steepen low-level lapse rates by early afternoon.  Widely scattered to scattered thunderstorms are forecast to develop this afternoon.  Forecast hodographs show 20-45 kt 700-500 mb flow (strongest over southeast OR) and mean storm motions 35-45 kt.  These flow fields coupled with evaporatively cooled downdrafts will likely result in a mix of quickly moving cells and smaller-scale linear clusters.  This activity will potentially be capable of severe gusts (60-75 mph) before diminishing by mid-late evening.    ...Western Great Lakes... Northwesterly mid-level flow will be in place across the western Great Lakes today, as a shortwave trough moves southeastward across the region.  At the surface, a pocket of maximized low-level moisture will be located over Wisconsin, where MLCAPE is expected to peak in the 1500 to 2500 J/kg range.  An isolated risk for large hail/damaging gusts are possible with the stronger thunderstorms.  ...Southern Texas Panhandle/West Texas/Far Western Oklahoma... Somewhat displaced from an expansive overnight MCS along the TX coast, an airmass featuring upper 50s to lower 60s F dewpoints will destabilize beneath a weak mid- to upper-level trough.  Widely scattered to scattered storms are forecast to develop by late afternoon and aggregate into small clusters this evening.  Isolated large hail/severe gusts are the primary severe hazards.  ..Smith/Weinman.. 05/27/2026")
-                    .padding(.top, 1.0)
-                    .padding(.bottom, 30.0)
-                    .monospaced()
-                    .font(.system(size: 13))
-                    .fontWeight(.bold)
+                OutlookForecastView(outlook: spc.getOutlook(day: day))
             }
             .padding(.horizontal, 15.0)
             .background(GeometryReader { geo in
                 LinearGradient(
-                    colors: self.colors,
+                    colors: ContentView.colors,
                     startPoint: .top,
                     endPoint: UnitPoint(x: 0.5, y: 350 / geo.size.height)
                 )
@@ -301,6 +339,7 @@ struct ContentView: View {
         }
         .ignoresSafeArea(edges: .bottom)
     }
+    
 }
 
 #Preview {

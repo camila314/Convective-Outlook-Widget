@@ -1,4 +1,53 @@
 import SwiftUI
+import CoreLocation
+
+// oh macOS 13, how I love you macOS 13
+@MainActor
+class LocationManager: NSObject, CLLocationManagerDelegate {
+    private let manager = CLLocationManager()
+    private var continuation: AsyncStream<CLLocation>.Continuation?
+    private var permissionContinuation: CheckedContinuation<CLAuthorizationStatus, Never>?
+
+    var locations: AsyncStream<CLLocation> {
+        AsyncStream { continuation in
+            self.continuation = continuation
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        locations.forEach { continuation?.yield($0) }
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        guard let continuation = permissionContinuation else { return }
+    
+        if manager.authorizationStatus != .notDetermined {
+            permissionContinuation = nil
+            continuation.resume(returning: manager.authorizationStatus)
+        }
+    }
+    
+    func request() async -> CLAuthorizationStatus {
+        guard manager.authorizationStatus == .notDetermined else {
+            return manager.authorizationStatus
+        }
+        
+        return await withCheckedContinuation { continuation in
+            self.permissionContinuation = continuation
+            manager.requestWhenInUseAuthorization()
+        }
+    }
+    
+    private override init() {
+        super.init()
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+        manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
+    }
+    
+    static let shared = LocationManager()
+}
 
 struct GeographicFeature: Decodable {
     let label: String?
@@ -115,7 +164,10 @@ func project(_ lon: Double, _ lat: Double, _ size: CGSize) -> CGPoint {
 }
 
 struct GeographicView: View {
+    @AppStorage("showLocation") var showLocation: Bool = false
+
     let features: [GeographicFeature]
+    @State var location: CLLocationCoordinate2D?
     
     var body: some View {
         GeometryReader { geometry in
@@ -133,8 +185,26 @@ struct GeographicView: View {
                         break
                     }
                 }
-            }.frame(width: geometry.size.width, height: geometry.size.height)
-        }.aspectRatio(3/2, contentMode: .fit)
+                
+                if let globalCoord = location {
+                    let coord = project(globalCoord.longitude, globalCoord.latitude, size)
+                    let circle = Path(ellipseIn: CGRect(x: coord.x - 3, y: coord.y - 3, width: 6, height: 6))
+                    context.fill(circle, with: .color(Color(red: 0.3, green: 0.75, blue: 1.0)))
+                }
+            }
+            .frame(width: geometry.size.width, height: geometry.size.height)
+            .task {
+                for await loc in LocationManager.shared.locations {
+                    location = loc.coordinate
+                }
+            }
+            .onChange(of: showLocation) {
+                if !showLocation {
+                    location = nil
+                }
+            }
+        }
+        .aspectRatio(3/2, contentMode: .fit)
     }
     
     func drawPoly(_ poly: [[[Double]]], stroke: Color, line: Double, ctx: GraphicsContext, size: CGSize) {
@@ -161,5 +231,5 @@ struct GeographicView: View {
     let parsed2 = try! Data(contentsOf: url2!)
     let decoded2 = try! JSONDecoder().decode(GeoJSON.self, from: parsed2)
     
-    return GeographicView(features: decoded.features + decoded2.features).background(Color.black)
+    return GeographicView(features: decoded.features + decoded2.features, location: CLLocationCoordinate2D(latitude: 37.323, longitude: -122.0322)).background(Color.black)
 }

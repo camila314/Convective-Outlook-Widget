@@ -24,6 +24,9 @@
 		AF3360D72FC3902A00D0C402 /* us-states.geojson in Resources */ = {isa = PBXBuildFile; fileRef = AF3360D52FC3902A00D0C402 /* us-states.geojson */; };
 		AF3360D92FC397EB00D0C402 /* outlook_test.geojson in Resources */ = {isa = PBXBuildFile; fileRef = AF3360D82FC397EB00D0C402 /* outlook_test.geojson */; };
 		AF3360DA2FC397EB00D0C402 /* outlook_test.geojson in Resources */ = {isa = PBXBuildFile; fileRef = AF3360D82FC397EB00D0C402 /* outlook_test.geojson */; };
+		AF7A0AE62FCCA9D100BEE8E8 /* SPCData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7A0AE52FCCA9D100BEE8E8 /* SPCData.swift */; };
+		AF7A0AE72FCCA9D100BEE8E8 /* SPCData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7A0AE52FCCA9D100BEE8E8 /* SPCData.swift */; };
+		AF7A0AE92FCD354900BEE8E8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7A0AE82FCD354900BEE8E8 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +73,9 @@
 		AF3360D52FC3902A00D0C402 /* us-states.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "us-states.geojson"; sourceTree = "<group>"; };
 		AF3360D82FC397EB00D0C402 /* outlook_test.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = outlook_test.geojson; sourceTree = "<group>"; };
 		AF7A0AE22FCB341500BEE8E8 /* MyIAP.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyIAP.storekit; sourceTree = "<group>"; };
+		AF7A0AE52FCCA9D100BEE8E8 /* SPCData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPCData.swift; sourceTree = "<group>"; };
+		AF7A0AE82FCD354900BEE8E8 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		AF7A0AEA2FCE6AF800BEE8E8 /* Convective-Outlook-Widget-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Convective-Outlook-Widget-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,8 +121,10 @@
 		AF33609B2FC371A200D0C402 /* Convective Outlook Widget */ = {
 			isa = PBXGroup;
 			children = (
+				AF7A0AEA2FCE6AF800BEE8E8 /* Convective-Outlook-Widget-Info.plist */,
 				AF33609C2FC371A200D0C402 /* Convective_Outlook_WidgetApp.swift */,
 				AF33609E2FC371A200D0C402 /* ContentView.swift */,
+				AF7A0AE82FCD354900BEE8E8 /* SettingsView.swift */,
 				AF3360A02FC371A300D0C402 /* Assets.xcassets */,
 				AF3360A22FC371A300D0C402 /* Convective_Outlook_Widget.entitlements */,
 				AF3360A32FC371A300D0C402 /* Preview Content */,
@@ -161,6 +169,7 @@
 				AF3360D82FC397EB00D0C402 /* outlook_test.geojson */,
 				AF3360D52FC3902A00D0C402 /* us-states.geojson */,
 				AF3360CA2FC3804400D0C402 /* GeographicView.swift */,
+				AF7A0AE52FCCA9D100BEE8E8 /* SPCData.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -274,6 +283,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF7A0AE92FCD354900BEE8E8 /* SettingsView.swift in Sources */,
+				AF7A0AE62FCCA9D100BEE8E8 /* SPCData.swift in Sources */,
 				AF33609F2FC371A200D0C402 /* ContentView.swift in Sources */,
 				AF3360CB2FC3804400D0C402 /* GeographicView.swift in Sources */,
 				AF33609D2FC371A200D0C402 /* Convective_Outlook_WidgetApp.swift in Sources */,
@@ -288,6 +299,7 @@
 				AF3360B72FC371D400D0C402 /* OutlookWidgetBundle.swift in Sources */,
 				AF3360B92FC371D400D0C402 /* OutlookWidget.swift in Sources */,
 				AF3360CC2FC3804400D0C402 /* GeographicView.swift in Sources */,
+				AF7A0AE72FCCA9D100BEE8E8 /* SPCData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +444,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Convective-Outlook-Widget-Info.plist";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow viewing location on outlook model.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -441,7 +455,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -471,6 +485,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Convective-Outlook-Widget-Info.plist";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow viewing location on outlook model.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -480,7 +496,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
