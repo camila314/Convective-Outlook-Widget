@@ -186,21 +186,18 @@ struct GeographicView: View {
                     }
                 }
                 
-                if let globalCoord = location {
-                    let coord = project(globalCoord.longitude, globalCoord.latitude, size)
-                    let circle = Path(ellipseIn: CGRect(x: coord.x - 3, y: coord.y - 3, width: 6, height: 6))
-                    context.fill(circle, with: .color(Color(red: 0.3, green: 0.75, blue: 1.0)))
+                if showLocation {
+                    if let globalCoord = location {
+                        let coord = project(globalCoord.longitude, globalCoord.latitude, size)
+                        let circle = Path(ellipseIn: CGRect(x: coord.x - 3, y: coord.y - 3, width: 6, height: 6))
+                        context.fill(circle, with: .color(Color(red: 0.3, green: 0.75, blue: 1.0)))
+                    }
                 }
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
             .task {
                 for await loc in LocationManager.shared.locations {
                     location = loc.coordinate
-                }
-            }
-            .onChange(of: showLocation) {
-                if !showLocation {
-                    location = nil
                 }
             }
         }
